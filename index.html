@@ -3,45 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple To-Do List</title>
+    <title>Stylish To-Do List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 0 auto;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #new-todo {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        #add-button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #add-button:hover {
+            background-color: #45a049;
         }
         #todo-list {
             list-style-type: none;
             padding: 0;
         }
         #todo-list li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        input[type="text"] {
-            width: 70%;
-            padding: 5px;
-        }
-        button {
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
             padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
         }
     </style>
 </head>
 <body>
-    <h1>My To-Do List</h1>
-    <input type="text" id="new-todo" placeholder="Enter a new task">
-    <button onclick="addTodo()">Add</button>
-    <ul id="todo-list"></ul>
+    <div class="container">
+        <h1>My To-Do List</h1>
+        <form id="todo-form">
+            <input type="text" id="new-todo" placeholder="Enter a new task">
+            <button type="submit" id="add-button">Add</button>
+        </form>
+        <ul id="todo-list"></ul>
+    </div>
 
     <script>
+        document.getElementById('todo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            addTodo();
+        });
+
         function addTodo() {
             const input = document.getElementById('new-todo');
             const list = document.getElementById('todo-list');
             if (input.value.trim() !== '') {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    ${input.value}
-                    <button onclick="this.parentElement.remove()">Delete</button>
+                    <span>${input.value}</span>
+                    <button class="delete-button" onclick="this.parentElement.remove()">Delete</button>
                 `;
                 list.appendChild(li);
                 input.value = '';
