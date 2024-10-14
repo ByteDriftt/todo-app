@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stylish To-Do List</title>
+    <title>Enhanced To-Do List</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0f8ff;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -17,39 +17,46 @@
         }
         .container {
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
         }
         h1 {
-            color: #333;
+            color: #2c3e50;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 28px;
         }
         #todo-form {
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         #new-todo {
             flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px 0 0 4px;
+            padding: 12px;
+            border: 2px solid #3498db;
+            border-radius: 6px 0 0 6px;
             font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        #new-todo:focus {
+            outline: none;
+            border-color: #2980b9;
         }
         #add-button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
+            padding: 12px 20px;
+            background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 6px 6px 0;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
         #add-button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
         }
         #todo-list {
             list-style-type: none;
@@ -57,30 +64,57 @@
         }
         #todo-list li {
             background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background-color 0.3s;
         }
-        .delete-button {
-            background-color: #f44336;
-            color: white;
+        #todo-list li:hover {
+            background-color: #f0f0f0;
+        }
+        .task-text {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #7f8c8d;
+        }
+        .task-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .complete-button, .delete-button {
             border: none;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .complete-button {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .complete-button:hover {
+            background-color: #27ae60;
+        }
+        .delete-button {
+            background-color: #e74c3c;
+            color: white;
         }
         .delete-button:hover {
-            background-color: #d32f2f;
+            background-color: #c0392b;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>My To-Do List</h1>
+        <h1>Enhanced To-Do List</h1>
         <form id="todo-form">
             <input type="text" id="new-todo" placeholder="Enter a new task">
             <button type="submit" id="add-button">Add</button>
@@ -100,12 +134,21 @@
             if (input.value.trim() !== '') {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span>${input.value}</span>
-                    <button class="delete-button" onclick="this.parentElement.remove()">Delete</button>
+                    <span class="task-text">${input.value}</span>
+                    <div class="task-buttons">
+                        <button class="complete-button" onclick="toggleComplete(this)">Complete</button>
+                        <button class="delete-button" onclick="this.closest('li').remove()">Delete</button>
+                    </div>
                 `;
                 list.appendChild(li);
                 input.value = '';
             }
+        }
+
+        function toggleComplete(button) {
+            const taskText = button.closest('li').querySelector('.task-text');
+            taskText.classList.toggle('completed');
+            button.textContent = taskText.classList.contains('completed') ? 'Undo' : 'Complete';
         }
     </script>
 </body>
